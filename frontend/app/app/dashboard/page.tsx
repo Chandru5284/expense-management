@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { CurrencySeparator } from '@/components/currency/CurrencySeparator'
 import Navbar from '@/components/navbar'
 
-// import icons
+// import iconsF
 import { FaDownload } from "react-icons/fa6";
 
 const DashboardPage = () => {
