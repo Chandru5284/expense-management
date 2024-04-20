@@ -19,10 +19,10 @@ class MemberSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     member = MemberSerializer(read_only=True)
     title = serializers.CharField(required=True, min_length=3, max_length=250)
-    description = serializers.CharField(required=True, min_length=3, max_length=500)
+    type = serializers.CharField(required=True, min_length=3, max_length=500)
     class Meta:
         model = Category
-        fields = ["slug", "member", "title", "description", "icon", "created_at", "is_active", "is_deleted"]
+        fields = ["slug", "member", "title", "description", "type", "icon", "created_at", "is_active", "is_deleted"]
 
 
 # Transaction

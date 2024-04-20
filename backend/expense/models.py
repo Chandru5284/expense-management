@@ -55,8 +55,14 @@ class Member(models.Model):
         
         
 class Category(models.Model):
+    
+    class Type(models.TextChoices):
+        INCOME = 'INCOME', _('INCOME')
+        EXPENSE = 'EXPENSE', _('EXPENSE')
+        
     slug = models.SlugField(max_length=250, null=True, editable=False)
     member = models.ForeignKey(Member, on_delete=models.CASCADE, null=False, blank=False, default=None, related_name='member_category')
+    type = models.CharField(max_length=10, choices=Type.choices, default=None)
     title = models.CharField(max_length=250, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     icon = models.CharField(max_length=250, null=True, blank=True)

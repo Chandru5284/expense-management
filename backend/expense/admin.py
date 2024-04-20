@@ -11,8 +11,8 @@ class MemberAdmin(admin.ModelAdmin):
 
 # Category
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("slug", "member", "title", "description", "icon", "created_at", "is_active")
-    search_fields = ("slug", "member", "title", "description", "icon", "created_at", "is_active")
+    list_display = ("slug", "member", "title", "type", "description", "icon", "created_at", "is_active")
+    search_fields = ("slug", "member", "title", "type", "description", "icon", "created_at", "is_active")
     readonly_fields = ('id', 'slug')
     
 # Transaction

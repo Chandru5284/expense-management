@@ -33,6 +33,7 @@ const MenuItem = (props: Props) => {
 
     return (
         <ul className="sm:space-y-5 text-sm flex sm:flex-col justify-between w-full">
+
             {item && item.map((row: any, index: any) => (
                 <li className="" key={index}>
                     <TooltipProvider>
@@ -53,7 +54,7 @@ const MenuItem = (props: Props) => {
             ))}
             <li className="sm:hidden">
                 <Avatar className='w-12 h-12'>
-                    <AvatarImage src={avatar.src}  alt="avatar" />
+                    <AvatarImage src={avatar.src} alt="avatar" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
             </li>

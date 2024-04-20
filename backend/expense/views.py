@@ -69,15 +69,19 @@ class MemberRecordView(APIView):
 class CategoryView(APIView):
     serializer_class = CategorySerializer
     def get(self, request, member_slug):
-        query_params = {
-            "title": request.GET.get('search_term', '')
-        }
-        member = Member.objects.get(slug=member_slug)
-        paginator = paginator = PageNumberPagination()
-        queryset = Category.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]))
-        context = paginator.paginate_queryset(queryset, request)
-        serializer = self.serializer_class(context, many = True)
-        return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
+        try:
+            query_params = {
+                "title": request.GET.get('search_term', ''),
+                "type": request.GET.get('type', '')
+            }
+            member = Member.objects.get(slug=member_slug)
+            paginator = paginator = PageNumberPagination()
+            queryset = Category.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(type__icontains=query_params["type"]))
+            context = paginator.paginate_queryset(queryset, request)
+            serializer = self.serializer_class(context, many = True)
+            return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
+        except Member.DoesNotExist:
+            return Response({ "message" :  "Member record not exist"}, status=status.HTTP_404_NOT_FOUND)
     def post(self, request, member_slug):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -121,16 +125,19 @@ class CategoryRecordView(APIView):
 class TransactionView(APIView):
     serializer_class = TransactionSerializer
     def get(self, request, member_slug):
-        query_params = {
-            "title": request.GET.get('search_term', ''),
-            "transaction_type": request.GET.get('type', '')
-        }
-        member = Member.objects.get(slug=member_slug)
-        paginator = paginator = PageNumberPagination()
-        queryset = Transaction.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"]))
-        context = paginator.paginate_queryset(queryset, request)
-        serializer = self.serializer_class(context, many = True)
-        return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
+        try:
+            query_params = {
+                "title": request.GET.get('search_term', ''),
+                "transaction_type": request.GET.get('transaction_type', '')
+            }
+            member = Member.objects.get(slug=member_slug)
+            paginator = paginator = PageNumberPagination()
+            queryset = Transaction.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"]))
+            context = paginator.paginate_queryset(queryset, request)
+            serializer = self.serializer_class(context, many = True)
+            return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
+        except Member.DoesNotExist:
+            return Response({ "message" :  "Member record not exist"}, status=status.HTTP_404_NOT_FOUND)
     def post(self, request, member_slug):
         try:
             serializer = self.serializer_class(data=request.data)

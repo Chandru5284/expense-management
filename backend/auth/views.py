@@ -14,6 +14,7 @@ import hashlib
 # import models
 from user.models import Profile
 from django.contrib.auth.models import User
+from expense.models import Member
 
 # import serializers
 from .serializers import (
@@ -24,6 +25,7 @@ from .serializers import (
     ResetPasswordSerializer
 )
 from user.serializers import UserProfileSerializer
+from expense.serializers import MemberSerializer
 
 
 # 1. Signup
@@ -44,8 +46,8 @@ class SignupView(APIView):
         jwt_refresh_token_lifetime =  settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'] # .SIMPLE_JWT.ACCESS_TOKEN_LIFETIME
         output = {
             "message": "User registration completed successfully.",
-            "refresh": str(token),
-            "access": str(token.access_token),
+            "refresh_token": str(token),
+            "access_token": str(token.access_token),
             "access_token_life_time_in_seconds" : jwt_access_token_lifetime.total_seconds(),
             "refresh_token_life_time_in_seconds" : jwt_refresh_token_lifetime.total_seconds(),
         }        
@@ -73,10 +75,12 @@ class LoginView(APIView):
     permission_classes = (AllowAny, )
     login_serializer_class = LoginSerializer
     user_profile_serializer_class = UserProfileSerializer
+    user_member_serializer_class = MemberSerializer
     def post(self, request, format=None):
         serializer = self.login_serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.login()
+        member = Member.objects.filter(auth_user=user.id)
 
         try:
             profile = Profile.objects.get(auth_user_id=user.id)
@@ -87,20 +91,27 @@ class LoginView(APIView):
         #     return Response({"message": "Please verify your email."}, status=status.HTTP_400_BAD_REQUEST)
 
         user_profile = self.user_profile_serializer_class(profile)
+        user_member = self.user_member_serializer_class(member, many=True)
+        
         token = RefreshToken.for_user(user)
         
         jwt_access_token_lifetime =  settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'] # .SIMPLE_JWT.ACCESS_TOKEN_LIFETIME
         jwt_refresh_token_lifetime =  settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'] # .SIMPLE_JWT.ACCESS_TOKEN_LIFETIME
         data = {
-          "refresh": str(token),
-          "access": str(token.access_token),
+          "refresh_token": str(token),
+          "access_token": str(token.access_token),
           "access_token_life_time_in_seconds" : jwt_access_token_lifetime.total_seconds(),
           "refresh_token_life_time_in_seconds" : jwt_refresh_token_lifetime.total_seconds(),
+          "require_member_info" : True if(member.count() <= 0) else False,
         }
         user_profile_data = user_profile.data
         auth_user_data = user_profile_data.pop('auth_user')
         user_profile_data.update(auth_user_data)
         data.update({ 'user_profile' : user_profile_data })
+        
+        # append organization info in output
+        user_member_data = user_member.data
+        data.update({ 'members' : user_member_data })
 
         return Response(data, status=status.HTTP_200_OK)
     

@@ -26,8 +26,11 @@ urlpatterns = [
     # Authentication
     path('api/v1/auth/', include('auth.urls')),
     
-    # Authentication
+    # expense
     path('api/v1/expense/', include('expense.urls')),
+    
+    # dashboard
+    path('api/v1/dashboard/', include('dashboard.urls')),
 
     # user
     # path('api/v1/user/', include('user.urls')),
