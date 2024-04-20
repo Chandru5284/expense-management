@@ -4,7 +4,7 @@ import React from 'react'
 import { Search, TeamSwitcher } from '../dashboard'
 import { DarkModeButton } from '../theme-toggler'
 
-const Navbar = () => {
+const Navbar = ({ members, currentMember }: any) => {
     return (
         <>
             <TeamSwitcher />
