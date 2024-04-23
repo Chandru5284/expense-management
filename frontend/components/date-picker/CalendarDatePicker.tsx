@@ -13,9 +13,9 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function CalendarDatePicker({ onHandleChange }: any) {
+export function CalendarDatePicker({ onHandleChange, date, setDate }: any) {
 
-    const [date, setDate] = React.useState<any>()
+    // const [date, setDate] = React.useState<any>()
 
     const onSelectDate = (date: Date) => {
         setDate(format(date, "yyyy-MM-dd"))

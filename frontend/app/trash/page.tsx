@@ -86,7 +86,7 @@
 
 
 // const TrashPage = () => {
-    
+
 //     const [incomeTags, setIncomeTags] = useState<any>([]);
 //     const [expenseTags, setExpenseTags] = useState<any>([]);
 
@@ -109,54 +109,82 @@
 
 
 
-import React from 'react';
-import { FaMoneyBillAlt, FaLaptop, FaChartLine, FaBuilding, FaMoneyCheckAlt, FaHandHoldingUsd, FaGift, FaChild, FaBriefcase } from 'react-icons/fa';
+// import React from 'react';
+// import { FaMoneyBillAlt, FaLaptop, FaChartLine, FaBuilding, FaMoneyCheckAlt, FaHandHoldingUsd, FaGift, FaChild, FaBriefcase } from 'react-icons/fa';
 
-const incomeIcons: any = {
-    FaMoneyBillAlt: FaMoneyBillAlt,
-    FaChartLine: FaChartLine,
-    FaLaptop: FaLaptop,
-    FaBuilding: FaBuilding,
-    FaMoneyCheckAlt: FaMoneyCheckAlt,
-    FaHandHoldingUsd: FaHandHoldingUsd,
-    FaGift: FaGift,
-    FaChild: FaChild,
-    FaBriefcase: FaBriefcase,
-};
+// const incomeIcons: any = {
+//     FaMoneyBillAlt: FaMoneyBillAlt,
+//     FaChartLine: FaChartLine,
+//     FaLaptop: FaLaptop,
+//     FaBuilding: FaBuilding,
+//     FaMoneyCheckAlt: FaMoneyCheckAlt,
+//     FaHandHoldingUsd: FaHandHoldingUsd,
+//     FaGift: FaGift,
+//     FaChild: FaChild,
+//     FaBriefcase: FaBriefcase,
+// };
 
-const YourComponent = () => {
-    const income = [
-        {
-            "icon": "FaMoneyBillAlt",
-            "title": "Salary",
-            "type": "INCOME"
-        },
-        {
-            "icon": "FaLaptop",
-            "title": "Freelance Income",
-            "type": "INCOME"
-        },
-        {
-            "icon": "FaChartLine",
-            "title": "Investment Income",
-            "type": "INCOME"
-        },
-        // Rest of your income data
-    ];
+// const YourComponent = () => {
+//     const income = [
+//         {
+//             "icon": "FaMoneyBillAlt",
+//             "title": "Salary",
+//             "type": "INCOME"
+//         },
+//         {
+//             "icon": "FaLaptop",
+//             "title": "Freelance Income",
+//             "type": "INCOME"
+//         },
+//         {
+//             "icon": "FaChartLine",
+//             "title": "Investment Income",
+//             "type": "INCOME"
+//         },
+//         // Rest of your income data
+//     ];
+
+//     return (
+//         <div>
+//             {income.map((item, index) => {
+//                 const IconComponent: any = incomeIcons[item.icon]; // Get the corresponding icon component from incomeIcons
+//                 return (
+//                     <div key={index}>
+//                         <IconComponent /> {/* Render the icon component */}
+//                         <span>{item.title}</span> {/* Render the title */}
+//                     </div>
+//                 );
+//             })}
+//         </div>
+//     );
+// };
+
+// export default YourComponent;
+
+"use client"
+import { useTransactionRecord } from '@/hooks/use-transaction-record';
+import React from 'react'
+
+
+const TrashPage = () => {
+
+    const record = useTransactionRecord((state) => state.record);
+    const setRecord = useTransactionRecord((state) => state.setRecord);
+    const removeRecord = useTransactionRecord((state) => state.removeRecord);
+
+    console.log(record)
+
+    const data = {
+        "name": "test",
+        "amount": 100
+    }
 
     return (
         <div>
-            {income.map((item, index) => {
-                const IconComponent: any = incomeIcons[item.icon]; // Get the corresponding icon component from incomeIcons
-                return (
-                    <div key={index}>
-                        <IconComponent /> {/* Render the icon component */}
-                        <span>{item.title}</span> {/* Render the title */}
-                    </div>
-                );
-            })}
+            <button onClick={() => setRecord(data)}>click</button>
+            <button onClick={() => removeRecord()}>rem</button>
         </div>
-    );
-};
+    )
+}
 
-export default YourComponent;
+export default TrashPage

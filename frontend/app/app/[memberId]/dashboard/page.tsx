@@ -157,7 +157,7 @@ const DashboardPage = (props: any) => {
                                                     You made {transaction?.this_month__total_transaction} transactions in this month.
                                                 </CardDescription>
                                             </CardHeader>
-                                            <CardContent>
+                                            <CardContent className='h-full'>
                                                 <RecentSales />
                                             </CardContent>
                                         </Card>

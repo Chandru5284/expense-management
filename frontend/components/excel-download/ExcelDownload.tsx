@@ -58,7 +58,7 @@ const ExcelDownload = () => {
 
         // downloadExcelMutation()
 
-        axios.get("http://127.0.0.1:8002/api/v1/dashboard/member-1/download-excel/?start_date=2024-03-15&end_date=2024-04-15")
+        axios.get("https://chandru5284.pythonanywhere.com/api/v1/dashboard/member-1/download-excel/?start_date=2024-03-15&end_date=2024-04-15")
 
     }
 
@@ -74,7 +74,7 @@ const ExcelDownload = () => {
 
                     {start_date != null && end_date != null ?
                         (
-                            <Link href={`http://127.0.0.1:8002/api/v1/dashboard/member-1/download-excel/?start_date=${start_date}&end_date=${end_date}`}>
+                            <Link href={`https://chandru5284.pythonanywhere.com/api/v1/dashboard/member-1/download-excel/?start_date=${start_date}&end_date=${end_date}`}>
                                 Download
                             </Link>
                         ) : "Download"
