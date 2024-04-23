@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { format } from "date-fns"
 import { useParams, usePathname } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
@@ -11,12 +11,16 @@ import { CurrencySeparator } from '../currency/CurrencySeparator'
 // import icons
 import { FaMoneyBill } from 'react-icons/fa6'
 import { RiMessage3Line } from 'react-icons/ri'
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 // import services
 import { TransactionServices } from '@/services'
 
 // import configs
 import { transactionDefaultIcons } from '@/config/config'
+import { Button } from '../ui/button'
+import { Dropdown } from './DropDown'
+import { useTransactionRecord } from '@/hooks/use-transaction-record'
 
 
 const TransactionList = () => {
@@ -28,6 +32,12 @@ const TransactionList = () => {
     const pathname = usePathname()
 
     const expense_type = pathname == `/app/${query.memberId}/income` ? "INCOME" : "EXPENSE"
+
+    const record = useTransactionRecord((state) => state.record);
+    const setRecord = useTransactionRecord((state) => state.setRecord);
+    // const removeRecord = useTransactionRecord((state) => state.removeRecord);
+
+    const [isOpen, setIsOpen] = useState<any>(false)
 
     const fetchTransactionList = () => {
         const data = TransactionServices.getAll(member_id, expense_type).then((response) => {
@@ -41,15 +51,21 @@ const TransactionList = () => {
         queryFn: fetchTransactionList
     })
 
-    console.log(transaction)
+    const fetchTransactionRecord = (slug: any) => {
+        TransactionServices.show(slug).then((response) => {
+            setRecord(response)
+            // console.log(response)
+        })
+    }
+
+    console.log(record)
 
     return (
         <div className='divide-y divide-gray-200'>
             {transaction && transaction.map((row: any, index: any) => {
                 const IconComponent: any = transactionDefaultIcons[row.category.icon]; // Get the corresponding icon component from incomeIcons
-                console.log(IconComponent)
                 return (
-                    <div key={index} className="">
+                    <div key={index} className="relative">
                         <a href="#" className="block hover:bg-gray-50 space-y-1">
                             <div className="px-4 py-4 sm:px-6 flex w-full items-center gap-x-5">
                                 <div className=''>
@@ -89,9 +105,15 @@ const TransactionList = () => {
                                 </div>
                             </div>
                         </a>
+                        <button className='absolute top-1.5 right-1.5' onClick={() => fetchTransactionRecord(row.slug)}>
+                            {/* <Dropdown slug={row.slug} fetchRecord={fetchTransactionRecord} /> */}
+                            sa
+                        </button>
                     </div>
                 )
             })}
+
+
         </div>
     )
 }

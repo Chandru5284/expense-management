@@ -5,7 +5,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { IoMdSettings } from "react-icons/io";
-import { CiLogout } from "react-icons/ci";
+import { CiLogout, CiMoneyBill } from "react-icons/ci";
 
 import {
     FaShoppingCart,
@@ -186,5 +186,6 @@ export const transactionDefaultIcons = {
     FaHandHoldingUsd: FaHandHoldingUsd,
     FaGift: FaGift,
     FaChild: FaChild,
-    FaBriefcase: FaBriefcase
+    FaBriefcase: FaBriefcase,
+    CiMoneyBill: CiMoneyBill
 } as any

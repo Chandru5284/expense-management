@@ -13,6 +13,7 @@ import { Button } from '../ui/button'
 
 // import services
 import { CategoryServices, TransactionServices } from '@/services'
+import { useTransactionRecord } from '@/hooks/use-transaction-record'
 
 const TransactionForm = () => {
 
@@ -30,8 +31,19 @@ const TransactionForm = () => {
         "transaction_type": pathname == `/app/${member_id}/income` ? "INCOME" : "EXPENSE",
     }
 
-    const [record, setRecord] = useState<any>(initial_value)
+    const record = useTransactionRecord((state) => state.record);
+    const setRecord = useTransactionRecord((state) => state.setRecord);
+    const removeRecord = useTransactionRecord((state) => state.removeRecord);
+    const isEdit = useTransactionRecord((state) => state.isEdit);
+    const setIsEdit = useTransactionRecord((state) => state.setIsEdit);
+
+    const selectedDate = record.date
+
+    // const [record, setRecord] = useState<any>()
+    const [date, setDate] = useState<any>(selectedDate)
     const [recordError, setRecordError] = useState<any>()
+
+    console.log(selectedDate)
 
     const fetchCategoryList = () => {
         const data = CategoryServices.getAll(member_id, expense_type).then((response) => {
@@ -46,14 +58,35 @@ const TransactionForm = () => {
     })
 
     const onHandleChange = (name: string, value: string | number | boolean) => {
-        setRecord({ ...record, [name]: value })
+        setRecord({ "transaction_type": pathname == `/app/${member_id}/income` ? "INCOME" : "EXPENSE", ...record, [name]: value })
+        console.log("WORKING")
     }
 
     const createTransactionMutation: any = useMutation({
         mutationFn: () => {
             return TransactionServices.create(member_id, record).then((response) => {
                 console.log(response)
-                setRecord(initial_value)
+                // setRecord(initial_value)
+                removeRecord()
+                setDate("")
+            }).catch((error) => {
+                setRecordError(error.response.data)
+            })
+
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['transactionList'] });
+        }
+    })
+
+    const editTransactionMutation: any = useMutation({
+        mutationFn: () => {
+            return TransactionServices.update(record.slug, record).then((response) => {
+                console.log(response)
+                // setRecord(initial_value)
+                removeRecord()
+                setDate("")
+                setIsEdit(false)
             }).catch((error) => {
                 setRecordError(error.response.data)
             })
@@ -66,7 +99,14 @@ const TransactionForm = () => {
 
     const onHandleFormSubmit = (e: any) => {
         e.preventDefault()
-        createTransactionMutation.mutate()
+
+        if (isEdit) {
+            editTransactionMutation.mutate()
+        }
+        else {
+            createTransactionMutation.mutate()
+        }
+
     }
 
     return (
@@ -79,7 +119,7 @@ const TransactionForm = () => {
                     <Input placeholder="Income Title"
                         id="title"
                         name="title"
-                        value={record?.title || ""}
+                        value={record?.title}
                         onChange={(e) => onHandleChange(e.target.name, e.target.value)} />
                 </div>
                 {recordError?.title && (
@@ -89,7 +129,7 @@ const TransactionForm = () => {
                     <Input placeholder="Income Amount"
                         id="amount"
                         name="amount"
-                        value={record?.amount || ""}
+                        value={record?.amount}
                         onChange={(e) => onHandleChange(e.target.name, e.target.value)} />
                 </div>
                 {recordError?.amount && (
@@ -97,13 +137,13 @@ const TransactionForm = () => {
                 )}
                 <div className='flex gap-3'>
                     <div className='basis-[50%]'>
-                        <CalendarDatePicker onHandleChange={onHandleChange} />
+                        <CalendarDatePicker date={date} setDate={setDate} onHandleChange={onHandleChange} />
                         {recordError?.date && (
                             <p className="text-red-500 text-xs italic">{recordError.date || ""}</p>
                         )}
                     </div>
                     <div className='basis-[50%]'>
-                        <Select onValueChange={(value) => onHandleChange('category', value)}>
+                        <Select onValueChange={(value) => onHandleChange('category', value)} defaultValue={record?.category?.slug}>
                             <SelectTrigger>
                                 <SelectValue placeholder={`${expense_type == "INCOME" ? "Income Type" : "Expense Type"}`} />
                             </SelectTrigger>
