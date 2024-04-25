@@ -132,7 +132,7 @@ class TransactionView(APIView):
             }
             member = Member.objects.get(slug=member_slug)
             paginator = paginator = PageNumberPagination()
-            queryset = Transaction.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"]))
+            queryset = Transaction.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"])).order_by('-created_at')
             context = paginator.paginate_queryset(queryset, request)
             serializer = self.serializer_class(context, many = True)
             return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
