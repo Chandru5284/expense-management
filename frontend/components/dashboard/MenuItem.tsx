@@ -39,11 +39,23 @@ const MenuItem = (props: Props) => {
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button asChild className={`rounded-full h-12 w-12 sm:h-16 sm:w-16 hover:bg-[#735DA5] hover:text-white  ${row.href == pathname ? "bg-[#735DA5]" : "bg-[#D3C5E5] text-black/60"} p-0`}>
-                                    <Link href={row.href}>
-                                        {React.createElement(row.icon, { className: 'w-6 h-6 sm:w-8 sm:h-8' })}
-                                    </Link>
-                                </Button>
+
+                                {row.href == "/app/logout" ?
+                                    (
+                                        <Button className={`rounded-full h-12 w-12 sm:h-16 sm:w-16 hover:bg-[#735DA5] hover:text-white bg-[#D3C5E5] text-black/60 p-0`} onClick={row.onClick}>
+                                            {React.createElement(row.icon, { className: 'w-6 h-6 sm:w-8 sm:h-8' })}
+                                        </Button>
+                                    )
+                                    :
+                                    (
+                                        <Button asChild className={`rounded-full h-12 w-12 sm:h-16 sm:w-16 hover:bg-[#735DA5] hover:text-white  ${row.href == pathname ? "bg-[#735DA5]" : "bg-[#D3C5E5] text-black/60"} p-0`}>
+                                            <Link href={row.href}>
+                                                {React.createElement(row.icon, { className: 'w-6 h-6 sm:w-8 sm:h-8' })}
+                                            </Link>
+                                        </Button>
+                                    )
+                                }
+
                             </TooltipTrigger>
                             <TooltipContent side="right" sideOffset={20}>
                                 <p>{row.hoverName}</p>

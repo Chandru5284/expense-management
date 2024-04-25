@@ -1,7 +1,7 @@
 "use client"
 
-import React from 'react'
-import { useParams } from 'next/navigation';
+import React, { useContext } from 'react'
+import { useParams, useRouter } from 'next/navigation';
 
 // import assets
 import avatar from '@/assets/images/avatar.png'
@@ -21,11 +21,20 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { IoMdSettings } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 
+// import context
+import GlobalContext from '@/context/GlobalContext';
+
 const SideBar = () => {
 
+    const router = useRouter()
     const query = useParams()
-
     const member_id = query.memberId
+    const gContext: any = useContext(GlobalContext);
+
+    const onHandleLogout = () => {
+        gContext?.logout();
+        router.push('/auth/login');
+    }
 
     const featureMenu = [
         {
@@ -55,8 +64,10 @@ const SideBar = () => {
             hoverName: "Logout",
             icon: CiLogout,
             href: "/app/logout",
+            onClick: onHandleLogout,
         },
     ]
+
 
     return (
         <div className="h-full">
