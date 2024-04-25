@@ -14,7 +14,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function CalendarDateRangePicker({date, setDate}: any) {
+export function CalendarDateRangePicker({ date, setDate, months = 1 }: any) {
 
     return (
         <div className={cn("grid gap-2")}>
@@ -50,7 +50,7 @@ export function CalendarDateRangePicker({date, setDate}: any) {
                         defaultMonth={date?.from}
                         selected={date}
                         onSelect={setDate}
-                        numberOfMonths={2}
+                        numberOfMonths={months}
                     />
                 </PopoverContent>
             </Popover>
