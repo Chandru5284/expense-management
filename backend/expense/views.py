@@ -130,9 +130,12 @@ class TransactionView(APIView):
                 "title": request.GET.get('search_term', ''),
                 "transaction_type": request.GET.get('transaction_type', '')
             }
+            user = User.objects.get(id=request.user.id)
             member = Member.objects.get(slug=member_slug)
+            if user != member.auth_user:
+                return Response({ "message" :  "Member record not exist"}, status=status.HTTP_404_NOT_FOUND)
             paginator = paginator = PageNumberPagination()
-            queryset = Transaction.objects.filter(Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"]))
+            queryset = Transaction.objects.filter(Q(member__auth_user=user), Q(member=member), Q(title__icontains=query_params["title"]), Q(transaction_type__icontains=query_params["transaction_type"])).order_by('-created_at')
             context = paginator.paginate_queryset(queryset, request)
             serializer = self.serializer_class(context, many = True)
             return Response(paginator.get_paginated_response(serializer.data).data, status=status.HTTP_200_OK)
@@ -155,7 +158,8 @@ class TransactionView(APIView):
             queryset = Transaction.objects.get(slug=slug)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            category = Category.objects.get(slug=request.data.get('category'))
+            serializer.save(category=category)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Transaction.DoesNotExist:
             return Response({ "message" :  "Transaction record not exist"}, status=status.HTTP_404_NOT_FOUND)

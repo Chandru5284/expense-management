@@ -144,7 +144,8 @@ class DownloadExcelView(APIView):
             
             query_params = {
                 "start_date": request.GET.get('start_date', ''),
-                "end_date": request.GET.get('end_date', '')
+                "end_date": request.GET.get('end_date', ''),
+                "transaction_type": request.GET.get('transaction_type', '')
             }
              
             # member model for filtering
@@ -158,7 +159,7 @@ class DownloadExcelView(APIView):
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
             
             # Query the sales data within the specified date range
-            sales_data = Transaction.objects.filter(member=member, date__range=[start_date, end_date]).order_by('date')
+            sales_data = Transaction.objects.filter(Q(member=member), Q(date__range=[start_date, end_date]), Q(transaction_type__icontains=query_params["transaction_type"])).order_by('date')
             
             print(query_params['start_date'], "-----", query_params['end_date'])
 
@@ -228,7 +229,7 @@ class DownloadExcelView(APIView):
             # Open the file for reading in binary mode
             with open(file_path, 'rb') as f:
                 response = HttpResponse(f.read(), content_type='application/vnd.ms-excel')
-                response['Content-Disposition'] = 'attachment; filename=sales_data.xlsx'
+                response['Content-Disposition'] = 'attachment; filename=transactions.xlsx'
 
             # Delete the temporary file
             os.unlink(file_path)      

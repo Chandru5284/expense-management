@@ -58,7 +58,7 @@ const TransactionList = () => {
         })
     }
 
-    console.log(record)
+    // console.log(record)
 
     return (
         <div className='divide-y divide-gray-200'>

@@ -40,8 +40,7 @@ const DashboardPage = (props: any) => {
     return (
         <>
             {
-                isLoading ?
-                    <SkeletonLoading />
+                isLoading ? (<SkeletonLoading />)
                     :
                     <>
                         <div className="flex h-[10%] items-center px-4 ">

@@ -18,7 +18,7 @@ export function CalendarDatePicker({ onHandleChange, date, setDate }: any) {
     // const [date, setDate] = React.useState<any>()
 
     const onSelectDate = (date: Date) => {
-        setDate(format(date, "yyyy-MM-dd"))
+        // setDate(format(date, "yyyy-MM-dd"))
         onHandleChange("date", format(date, "yyyy-MM-dd"))
     }
 
