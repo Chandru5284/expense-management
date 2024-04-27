@@ -47,17 +47,13 @@ const userProfile = async () => {
 };
 
 // edit user profile
-const editUserProfile = async (record:any) => {
+const editUserProfile = async (record: any) => {
     return await axios.put(`/api/v1/user/my-profile/update`, record).then(handleResponse).catch(handleError);
 };
 
-const socialLogin = async (record:any) => {
-    return await axios.put(`/api/v1/auth/login/social/`, record).then(handleResponse).catch(handleError);
-};
 
 
 const AuthenticationServices = {
-
     signUp,
     login,
     forgotPasswordEmail,
@@ -68,7 +64,6 @@ const AuthenticationServices = {
     emailVerify,
     userProfile,
     editUserProfile,
-    socialLogin
 }
 
 export default AuthenticationServices

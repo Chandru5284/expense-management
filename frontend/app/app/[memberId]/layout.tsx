@@ -36,6 +36,7 @@ export default function DashboardLayout({
                     {children}
                 </div>
             </div>
+
             <div className='sm:hidden h-[12%] py-1 px-3 '>
                 <div className='h-full bg-card rounded-xl shadow-lg flex items-center w-full px-2'>
                     <MobileMenuBar />

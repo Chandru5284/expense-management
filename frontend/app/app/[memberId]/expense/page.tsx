@@ -42,8 +42,8 @@ const ExpensePage = () => {
                     </div>
                     <div className="flex-1 space-y-4 px-4 sm:px-8 h-[15%]">
                         <div className="flex pt-6 items-center justify-between space-y-2">
-                            <h2 className="text-3xl font-bold tracking-tight">Income</h2>
-                            <ExcelDownload transaction_type="INCOME" />
+                            <h2 className="text-3xl font-bold tracking-tight">Expense</h2>
+                            <ExcelDownload transaction_type="EXPENSE" />
                         </div>
                     </div>
                     <div className='pb-1.5  h-[75%]  w-full px-2 sm:px-4'>

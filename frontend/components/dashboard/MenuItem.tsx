@@ -1,7 +1,7 @@
 "use client"
 
-import React from 'react'
-import { usePathname } from 'next/navigation';
+import React, { useContext } from 'react'
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // import components
@@ -20,6 +20,8 @@ import {
 
 // import assets
 import avatar from '@/assets/images/avatar.png'
+import GlobalContext from '@/context/GlobalContext';
+import { CiLogout } from 'react-icons/ci';
 
 interface Props {
     item: any;
@@ -30,6 +32,13 @@ const MenuItem = (props: Props) => {
     const { item } = props
 
     const pathname = usePathname()
+    const router = useRouter()
+    const gContext: any = useContext(GlobalContext);
+
+    const onHandleLogout = () => {
+        gContext?.logout();
+        router.push('/auth/login');
+    }
 
     return (
         <ul className="sm:space-y-5 text-sm flex sm:flex-col justify-between w-full">
@@ -65,10 +74,13 @@ const MenuItem = (props: Props) => {
                 </li>
             ))}
             <li className="sm:hidden">
-                <Avatar className='w-12 h-12'>
+                {/* <Avatar className='w-12 h-12'>
                     <AvatarImage src={avatar.src} alt="avatar" />
                     <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                </Avatar> */}
+                <Button className={`rounded-full h-12 w-12 sm:h-16 sm:w-16 hover:bg-[#735DA5] hover:text-white bg-[#D3C5E5] text-black/60 p-0`} onClick={onHandleLogout}>
+                    {React.createElement(CiLogout, { className: 'w-6 h-6 sm:w-8 sm:h-8' })}
+                </Button>
             </li>
         </ul>
     )
