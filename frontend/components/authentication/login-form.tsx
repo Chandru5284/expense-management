@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 //import components
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button" 
+import { Button } from "@/components/ui/button"
 
 // import services
 import { AuthenticationServices } from "@/services"
@@ -43,6 +43,9 @@ const LoginForm = () => {
     const submitLoginData = async (e: any) => {
         e.preventDefault()
         setLoading(true);
+        
+        if (gContext.isLoggedIn !== null) gContext?.logout()
+
         try {
             AuthenticationServices.login(record).then((response) => {
                 gContext?.login(response.access_token, response.refresh_token, response.user_profile)
@@ -56,6 +59,8 @@ const LoginForm = () => {
             setLoading(false);
         }
     }
+
+    console.log(gContext.isLoggedIn)
 
     return (
         <div className="">

@@ -1,26 +1,53 @@
-import React from 'react'
+"use client"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import React, { useState } from 'react'
+
+import Link from 'next/link'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import CategoryForm from '@/components/settings/CategoryForm'
+import MemberForm from '@/components/settings/MemberForm'
+import Profile from '@/components/settings/Profile'
+import Navbar from '@/components/navbar'
+import ChangePassword from '@/components/settings/ChangePassword'
+
 
 const SettingsPage = () => {
+
+    const [menu, setMenu] = useState("PROFILE")
+
     return (
         <>
-            <div className="flex-1 space-y-4 px-4 sm:px-8 h-[15%]">
-                <div className="flex pt-6 items-center justify-between space-y-2">
-                    <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
+            <div className="flex py-5 items-center px-4 ">
+                <Navbar />
+            </div>
+            <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+                <div className="mx-auto grid w-full gap-2">
+                    <h1 className="text-3xl font-semibold">Settings</h1>
                 </div>
-            </div>
 
-            <div className='px-4 sm:px-8 w-full'>
-                <Tabs defaultValue="account" className="w-full">
-                    <TabsList className='w-full'>
-                        <TabsTrigger value="account" className='w-full'>Account</TabsTrigger>
-                        <TabsTrigger value="password" className='w-full'>Password</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="account">Make changes to your account here.</TabsContent>
-                    <TabsContent value="password">Change your password here.</TabsContent>
-                </Tabs>
-            </div>
+                <div className="mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+                    <nav
+                        className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0"
+                    >
+                        <a className={`font-semibold cursor-pointer ${menu == "PROFILE" ? "text-primary" : ""}`} onClick={() => setMenu("PROFILE")}>Profile</a>
+                        <a className={`font-semibold cursor-pointer ${menu == "CHANGE_PASSWORD" ? "text-primary" : ""}`} onClick={() => setMenu("CHANGE_PASSWORD")}>Password</a>
+                        <a className={`font-semibold cursor-pointer ${menu == "MEMBER" ? "text-primary" : ""}`} onClick={() => setMenu("MEMBER")}>Member</a>
+                        <a className={`font-semibold cursor-pointer ${menu == "CATEGORY" ? "text-primary" : ""}`} onClick={() => setMenu("CATEGORY")}>Category</a>
+                    </nav>
+
+                    {menu == "PROFILE" && (<Profile />)}
+
+                    {menu == "CHANGE_PASSWORD" && (<ChangePassword />)}
+
+                    {menu == "MEMBER" && (<MemberForm />)}
+
+                    {menu == "CATEGORY" && (<CategoryForm />)}
+
+                </div>
+            </main>
 
         </>
     )

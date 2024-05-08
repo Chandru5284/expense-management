@@ -68,9 +68,9 @@ const TransactionCreateForm = ({ open, setOpen }: any) => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="p-3 sm:p-5">
                 <DialogHeader>
-                    <DialogTitle>Add Income</DialogTitle>
+                    <DialogTitle>Add {transaction_type == "INCOME" ? "Income" : "Expense"}</DialogTitle>
                     <DialogDescription>
-                        Add your income to manage your finances better.
+                        Add your expense to manage your finances better.
                     </DialogDescription>
                 </DialogHeader>
                 <div>
@@ -79,7 +79,7 @@ const TransactionCreateForm = ({ open, setOpen }: any) => {
                             <p className="font-medium mt-2 text-red-500 hover:text-red-600 text-sm text-center">{recordError.message || ""}</p>
                         )}
                         <div className='space-y-1.5'>
-                            <Input placeholder="Income Title"
+                            <Input placeholder={transaction_type == "INCOME" ? "Income title" : "Expense title"}
                                 id="title"
                                 name="title"
                                 value={record?.title}
@@ -89,7 +89,7 @@ const TransactionCreateForm = ({ open, setOpen }: any) => {
                             <p className="text-red-500 text-xs italic">{recordError.title || ""}</p>
                         )}
                         <div className='space-y-1.5'>
-                            <Input placeholder="Income Amount"
+                            <Input placeholder="Amount"
                                 id="amount"
                                 name="amount"
                                 value={record?.amount}
@@ -133,7 +133,7 @@ const TransactionCreateForm = ({ open, setOpen }: any) => {
                                 <p className="text-red-500 text-xs italic">{recordError.description || ""}</p>
                             )}
                         </div>
-                        <Button className='w-full'>Add Income</Button>
+                        <Button className='w-full'>Add {transaction_type == "INCOME" ? "Income" : "Expense"}</Button>
                     </form>
                 </div>
             </DialogContent>

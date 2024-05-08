@@ -37,6 +37,17 @@ const DashboardPage = (props: any) => {
         queryFn: fetchTotalTransactions
     })
 
+    const fetchChartData = () => {
+        const data = DashboardServices.getChartValues(params.memberId).then((response) => {
+            return response
+        }).catch((error) => { })
+        return data
+    }
+
+    const { data: chartData } = useQuery({
+        queryKey: ['charData'],
+        queryFn: fetchChartData
+    })
     return (
         <>
             {
@@ -53,8 +64,8 @@ const DashboardPage = (props: any) => {
                             </div>
                         </div>
                         <div className='px-2 pb-1.5  h-[75%]'>
-                            <ScrollArea className=" h-full w-full rounded-md">
-                                <div className="space-y-4 px-2 sm:px-5 pb-4">
+                            <ScrollArea className=" h-full w-full rounded-md ">
+                                <div className="space-y-4 px-2 sm:px-5 ">
                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                         <Card>
                                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -145,18 +156,18 @@ const DashboardPage = (props: any) => {
                                             <CardHeader>
                                                 <CardTitle>Overview</CardTitle>
                                             </CardHeader>
-                                            <CardContent className="pl-2">
-                                                <Overview />
+                                            <CardContent className="pl-2  h-[250px] md:h-96">
+                                                <Overview data={chartData} />
                                             </CardContent>
                                         </Card>
-                                        <Card className="col-span-3">
+                                        <Card className="col-span-4 md:col-span-3">
                                             <CardHeader>
                                                 <CardTitle>Recent Transactions</CardTitle>
                                                 <CardDescription>
                                                     You made {transaction?.this_month__total_transaction} transactions in this month.
                                                 </CardDescription>
                                             </CardHeader>
-                                            <CardContent className='h-full'>
+                                            <CardContent className=''>
                                                 <RecentSales />
                                             </CardContent>
                                         </Card>

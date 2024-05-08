@@ -15,12 +15,8 @@ import { useTransactionRecord } from "@/hooks/use-transaction-record";
 
 export function Dropdown({ slug, fetchRecord }: any) {
 
-    const isEdit = useTransactionRecord((state) => state.isEdit);
-    const setIsEdit = useTransactionRecord((state) => state.setIsEdit);
-
     const onHandleClick = () => {
         fetchRecord(slug)
-        setIsEdit(true)
     }
 
     return (
