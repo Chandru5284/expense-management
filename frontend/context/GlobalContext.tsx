@@ -70,6 +70,8 @@ const GlobalProvider: React.FC<ProviderProps> = ({ children }) => {
 
     const login = (accessToken: string, refreshToken: string, userProfile: string) => {
 
+        const expirationTimeMs = 43200 * 1000; // 12 hours in milliseconds
+
         const userProfileJsonData: UserProfileInterface | any | null = JSON.parse(JSON.stringify(userProfile))
         const userProfileImage: string = userProfileJsonData.profile_image?.profile_image || ""
         const userProfileShortName: string = (userProfileJsonData.first_name.substring(0, 1)).toUpperCase() + userProfileJsonData.last_name.substring(0, 1);
@@ -104,6 +106,25 @@ const GlobalProvider: React.FC<ProviderProps> = ({ children }) => {
         setCookie("user_profile", JSON.stringify(userProfile), cookieConfig)
         setCookie("user_profile_image", userProfileImage, cookieConfig)
         setCookie("user_profile_short_name", userProfileShortName, cookieConfig)
+
+        setTimeout(() => {
+            localStorage.removeItem("is_logged_in");
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("user_profile");
+            localStorage.removeItem("user_profile_image");
+            localStorage.removeItem("user_profile_short_name");
+            localStorage.removeItem("require_member_info");
+
+            setIsLoggedIn(false);
+            setAccessToken(null);
+            setRefreshToken(null);
+            setUserProfile(null);
+            setUserProfileImage(null);
+            setUserProfileShortName(null);
+            setIsRequireMember(false);
+
+        }, expirationTimeMs);
 
     };
 

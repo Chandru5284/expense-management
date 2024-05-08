@@ -27,43 +27,10 @@ const CreateCategory = (props: any) => {
 
     const { open, setOpen, memberId } = props
 
-    console.log(memberId)
-
-    const query = useParams()
-
-    // const member_id = query.memberId
-
-    const queryClient = useQueryClient()
-
-    const gContext: any = useContext(GlobalContext);
-
-    const [record, setRecord] = useState<any>()
-    const [recordError, setRecordError] = useState<any>()
     const [incomeTags, setIncomeTags] = useState<any>([]);
     const [expenseTags, setExpenseTags] = useState<any>([]);
 
     const router = useRouter()
-
-    const onHandleChange = (name: string, value: string | number | boolean) => {
-        setRecord({ ...record, [name]: value })
-    }
-
-    const createMemberMutation: any = useMutation({
-        mutationFn: (record) => {
-            return CategoryServices.create(memberId, record).then((response) => {
-                // gContext?.set_require_member("false")
-                // router.push(`/app/${response.slug}/dashboard`)
-                // setOpen(false)
-            }).catch((error) => {
-                setRecordError(error.response.data)
-            })
-
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['membersList'] });
-        }
-    })
-
 
     const onHandleFormSubmit = async () => {
 
@@ -91,7 +58,7 @@ const CreateCategory = (props: any) => {
 
     return (
         <Dialog open={open}>
-             {/* overflow-y-scroll scrollbar-none */}
+            {/* overflow-y-scroll scrollbar-none */}
             <DialogContent className='max-w-2xl'>
                 <DialogHeader>
                     <DialogTitle>Create Category</DialogTitle>
@@ -100,14 +67,11 @@ const CreateCategory = (props: any) => {
                     </DialogDescription>
                 </DialogHeader>
                 <div>
-                    <Tabs defaultValue="account" className="">
+                    <Tabs defaultValue="income" className="">
                         <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="income">Income</TabsTrigger>
                             <TabsTrigger value="expense">Expense</TabsTrigger>
                         </TabsList>
-                        {recordError?.message && (
-                            <p className="font-medium mt-2 text-red-500 hover:text-red-600 text-sm text-center">{recordError.message || ""}</p>
-                        )}
                         <TabsContent value="income">
                             <div className=' mb-5'>
                                 <Label htmlFor="name" className="text-xl">Income</Label>
@@ -126,9 +90,9 @@ const CreateCategory = (props: any) => {
                             </div>
                         </TabsContent>
                     </Tabs>
-                        <div className='flex justify-end gap-x-5 mt-5'>
-                            <Button type="submit" onClick={onHandleFormSubmit}>Continue</Button>
-                        </div>
+                    <div className='flex justify-end gap-x-5 mt-5'>
+                        <Button type="submit" onClick={onHandleFormSubmit}>Continue</Button>
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>

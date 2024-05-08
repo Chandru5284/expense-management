@@ -28,7 +28,7 @@ const profileView = async () => {
 
 // change password
 const changePassword = async (record: any | null) => {
-    return await axios.put(`/api/v1/auth/changePassword/`, record).then(handleResponse).catch(handleError)
+    return await axios.put(`/api/v1/auth/change-password/`, record).then(handleResponse).catch(handleError)
 }
 
 // Verify Email
@@ -47,7 +47,7 @@ const userProfile = async () => {
 };
 
 // edit user profile
-const editUserProfile = async (record: any) => {
+const updateUserProfile = async (record: any) => {
     return await axios.put(`/api/v1/user/my-profile/update`, record).then(handleResponse).catch(handleError);
 };
 
@@ -63,7 +63,7 @@ const AuthenticationServices = {
     changePassword,
     emailVerify,
     userProfile,
-    editUserProfile,
+    updateUserProfile,
 }
 
 export default AuthenticationServices

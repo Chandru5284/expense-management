@@ -23,13 +23,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 # Update user profile serializer
 class UpdateUserProfileSerializer(serializers.Serializer):
-    first_name = serializers.CharField(required=True, min_length=3, max_length=80)
+    username = serializers.CharField(required=True, min_length=3, max_length=80)
     # email = serializers.CharField(required=True, min_length=3, max_length=80)
 
     def updateProfile(self, request, **kwargs):
         # update user info
         user = User.objects.get(id=request.user.id)
-        user.first_name = self.validated_data['first_name']
+        user.username = self.validated_data['username']
         # user.email = self.validated_data['email']
         user.save()
         return user

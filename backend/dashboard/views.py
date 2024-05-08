@@ -113,12 +113,12 @@ class DashboardChartView(APIView):
                 
                 # Convert sales to "K" format for readability
                 if income is not None:
-                    income = round(income / 1000)  # Convert to thousands and round to 2 decimal places
+                    income = (income)  # Convert to thousands and round to 2 decimal places
                 else:
                     income = 0
                     
                 if expense is not None:
-                    expense = round(expense / 1000)  # Convert to thousands and round to 2 decimal places
+                    expense = (expense)  # Convert to thousands and round to 2 decimal places
                 else:
                     expense = 0
                     

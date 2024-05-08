@@ -90,7 +90,7 @@ const TransactionTable = ({ transaction }: any) => {
                         <TableHead className="hidden md:table-cell">Amount</TableHead>
                         <TableHead className="">Date</TableHead>
                         <TableHead>
-                            <a className='underline text-indigo-500 cursor-pointer' onClick={() => setFormOpenModal(true)}>Add Income</a>
+                            <a className='underline text-indigo-500 cursor-pointer' onClick={() => setFormOpenModal(true)}>Add {expense_type == "INCOME" ? "Income" : "Expense"}</a>
                         </TableHead>
                     </TableRow>
                 </TableHeader>
