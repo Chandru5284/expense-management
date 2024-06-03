@@ -4,21 +4,22 @@ import Link from "next/link"
 import LoginForm from "@/components/authentication/login-form";
 import { Button } from "@/components/ui/button"
 import NavigatePreviousPage from "@/components/navigate-previous-page/NavigatePreviousPage";
+import ForgotPasswordForm from "@/components/authentication/forgot-password";
 
-const LoginPage = () => {
+const ForgotPasswordPage = () => {
     return (
-        <div className="h-dvh min-h-full flex justify-center items-center">
+        <div className="h-screen min-h-full flex justify-center items-center">
             <div className="border p-3 sm:p-9 rounded-md w-full sm:w-[60%] md:w-[40%]">
                 <div className='space-y-1'>
-                    <h1 className='text-center font-bold text-3xl'>Login</h1>
+                    <h1 className='text-center font-bold text-3xl'>Forgot Password</h1>
                     <div className="flex justify-between items-center ">
                         <NavigatePreviousPage />
                         <Button asChild variant="outline"  >
-                            <Link href="/auth/signup">Sign up</Link>
+                            <Link href="/auth/login">Login</Link>
                         </Button>
                     </div>
                     <div>
-                        <LoginForm />
+                        <ForgotPasswordForm />
                     </div>
                 </div>
 
@@ -27,4 +28,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default ForgotPasswordPage

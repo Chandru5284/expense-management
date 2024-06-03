@@ -17,6 +17,7 @@ import { CategoryServices } from '@/services'
 // import configs
 import { expenseSuggestions, incomeSuggestions, transactionDefaultIcons } from '@/config/config'
 import { Separator } from '../ui/separator'
+import LoadingSpinner from '../loading-spinner/LoadingSpinner'
 
 const CategoryForm = () => {
 
@@ -86,7 +87,6 @@ const CategoryForm = () => {
         }
     }
 
-    
     return (
         <div>
             <Tabs defaultValue="income" className="">
@@ -112,7 +112,9 @@ const CategoryForm = () => {
                 </TabsContent>
             </Tabs>
             <div className='flex justify-end gap-x-5 mt-5'>
-                <Button type="submit" onClick={onHandleSubmit}>Create</Button>
+                <Button type="submit" onClick={onHandleSubmit}>
+                    <LoadingSpinner isLoading={createCategoryMutation.isPending} text="Create" />
+                </Button>
             </div>
         </div>
     )

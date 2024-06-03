@@ -8,6 +8,7 @@ import { Loader } from "@/components/ui/loader";
 
 // import services
 import { MemberServices } from '@/services'
+import OverlayLoader from '../overlay-loader/OverlayLoader';
 
 
 const RedirectToDashboard = () => {
@@ -27,8 +28,8 @@ const RedirectToDashboard = () => {
     }, [isMounted, setIsMounted])
 
     return (
-        <div className="flex h-screen w-full items-center justify-center">
-            <Loader />
+        <div className="relative">
+            <OverlayLoader />
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 
 // import assets
 import avatar from '@/assets/images/avatar.png'
+import logo from '@/assets/images/logo.svg'
 
 // import components
 import MenuItem from './MenuItem';
@@ -71,13 +72,13 @@ const SideBar = () => {
 
     return (
         <div className="h-full">
-            <div className="h-[12%] p-3">
-                <Avatar className='w-full h-full'>
-                    <AvatarImage src={avatar.src} alt="avatar" />
+            <div className="h-[15%] p-3 flex items-center justify-center">
+                <Avatar className='h-12 w-12 sm:h-16 sm:w-16'>
+                    <AvatarImage src={logo.src} alt="avatar" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
             </div>
-            <div className='h-[60%] p- flex items-center justify-center '>
+            <div className='h-[57%] p- flex items-center justify-center '>
                 <div>
                     <MenuItem item={featureMenu} />
                 </div>

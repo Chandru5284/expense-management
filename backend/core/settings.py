@@ -68,7 +68,9 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'auth/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -213,3 +215,12 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
+
+# EMAIL_BACKEND ='django.core.mail.backends.smtp.Emailbackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'chandrucm5284@gmail.com'
+EMAIL_HOST_PASSWORD = 'amqigwcaruoikzcn'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

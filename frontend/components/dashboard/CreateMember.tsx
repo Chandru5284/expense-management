@@ -34,6 +34,7 @@ const CreateMember = (props: any) => {
 
     const onHandleChange = (name: string, value: string | number | boolean) => {
         setRecord({ ...record, [name]: value })
+        recordError ? setRecordError({}) : null
     }
 
     const createMemberMutation: any = useMutation({

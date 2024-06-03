@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
@@ -16,6 +16,7 @@ const Profile = () => {
 
     const onHandleChange = (name: any, value: any) => {
         setRecord({ ...record, [name]: value })
+        // recordError ? setRecordError({}) : null
     }
 
     const fetchProfile = () => {
@@ -26,10 +27,10 @@ const Profile = () => {
         return data
     }
 
-    const { data: profile } = useQuery({
-        queryKey: ['profile'],
-        queryFn: fetchProfile
-    })
+    useEffect(() => {
+        fetchProfile()
+    }, [])
+
 
     const updateProfileMutation: any = useMutation({
         mutationFn: () => {

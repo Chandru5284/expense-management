@@ -6,6 +6,7 @@ import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
 import { AuthenticationServices } from '@/services'
 import { useMutation } from '@tanstack/react-query'
+import LoadingSpinner from '../loading-spinner/LoadingSpinner'
 
 
 const ChangePassword = () => {
@@ -15,6 +16,7 @@ const ChangePassword = () => {
 
     const onHandleChange = (name: any, value: any) => {
         setRecord({ ...record, [name]: value })
+        recordError ? setRecordError({}) : null
     }
 
     const changePassword: any = useMutation({
@@ -43,6 +45,7 @@ const ChangePassword = () => {
             <CardContent>
                 <form className='space-y-4' onSubmit={onHandleSubmit}>
                     <Input placeholder="Old Password"
+                        type='password'
                         id='old_password'
                         name='old_password'
                         value={record?.old_password || ""}
@@ -54,6 +57,7 @@ const ChangePassword = () => {
                         </p>
                     )}
                     <Input placeholder="New Password"
+                        type='password'
                         id='new_password'
                         name='new_password'
                         value={record?.new_password || ""}
@@ -65,6 +69,7 @@ const ChangePassword = () => {
                         </p>
                     )}
                     <Input placeholder="Confirm Password"
+                        type='password'
                         id='confirm_password'
                         name='confirm_password'
                         value={record?.confirm_password || ""}
@@ -76,7 +81,9 @@ const ChangePassword = () => {
                         </p>
                     )}
                     <div className="border-t py-4 flex justify-end">
-                        <Button>Save</Button>
+                        <Button>
+                            <LoadingSpinner isLoading={changePassword.isPending} text="Submit" />
+                        </Button>
                     </div>
                 </form>
             </CardContent>

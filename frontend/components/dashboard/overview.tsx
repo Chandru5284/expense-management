@@ -142,7 +142,7 @@ export function Overview({ data }: any) {
                     dataKey="income"
                     fill="currentColor"
                     radius={[4, 4, 0, 0]}
-                    className="fill-[#735DA5]"
+                    className="fill-primary"
                 />
                 <Bar
                     dataKey="expense"

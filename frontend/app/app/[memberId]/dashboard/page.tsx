@@ -63,8 +63,8 @@ const DashboardPage = (props: any) => {
                                 <ExcelDownload />
                             </div>
                         </div>
-                        <div className='px-2 pb-1.5  h-[75%]'>
-                            <ScrollArea className=" h-full w-full rounded-md ">
+                        <div className='pb-1.5  h-[75%] sm:px-2'>
+                            <ScrollArea className="px-2 sm:px-0 h-full w-full rounded-md">
                                 <div className="space-y-4 px-2 sm:px-5 ">
                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                         <Card>

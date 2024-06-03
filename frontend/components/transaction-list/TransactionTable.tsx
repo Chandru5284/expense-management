@@ -104,8 +104,8 @@ const TransactionTable = ({ transaction }: any) => {
                                     <IconComponent className={`w-[72px] h-[72px] border rounded-md p-2 ${expense_type == "INCOME" ? "text-green-500" : "text-red-500"} `} />
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                    <p className='font-bold text-lg'>{row.title}</p>
-                                    <p className='text-xs'>{row.description}</p>
+                                    <p className='font-bold sm:text-lg truncate w-16 sm:w-full'>{row.title}</p>
+                                    <p className='text-xs truncate w-16 sm:w-full'>{row.description}</p>
                                 </TableCell>
                                 <TableCell className='hidden md:table-cell'>
                                     <span className=''>{row.category.title}</span>
