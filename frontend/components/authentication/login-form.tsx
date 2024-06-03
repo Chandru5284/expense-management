@@ -43,24 +43,18 @@ const LoginForm = () => {
     const submitLoginData = async (e: any) => {
         e.preventDefault()
         setLoading(true);
-        
+
         if (gContext.isLoggedIn !== null) gContext?.logout()
 
-        try {
-            AuthenticationServices.login(record).then((response) => {
-                gContext?.login(response.access_token, response.refresh_token, response.user_profile)
-                gContext?.set_require_member(response.require_member_info)
-                console.log(response);
-                router.push(`/app`);
-            }).catch((error: any) => {
-                setRecordError(error.response.data)
-            })
-        } finally {
+        AuthenticationServices.login(record).then((response) => {
+            gContext?.login(response.access_token, response.refresh_token, response.user_profile)
+            gContext?.set_require_member(response.require_member_info)
+            router.push(`/app`);
+        }).catch((error: any) => {
+            setRecordError(error.response.data)
             setLoading(false);
-        }
+        })
     }
-
-    console.log(gContext.isLoggedIn)
 
     return (
         <div className="">

@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
@@ -13,12 +13,16 @@ import ExcelDownload from '@/components/excel-download/ExcelDownload'
 
 // import services
 import { TransactionServices } from '@/services'
+import { Button } from '@/components/ui/button'
+import TransactionCreateForm from '@/components/transaction-form/TransactionCreateForm'
 
 
 const ExpensePage = () => {
 
     const query = useParams()
     const member_id = query.memberId
+
+    const [formOpenModal, setFormOpenModal] = useState(false)
 
     const fetchTransactionList = () => {
         const data = TransactionServices.getAll(member_id, "EXPENSE").then((response) => {
@@ -47,10 +51,29 @@ const ExpensePage = () => {
                         </div>
                     </div>
                     <div className='pb-1.5  h-[75%]  w-full px-2 sm:px-4'>
-                        <ScrollArea className="h-full w-full px-2 sm:px-4">
-                            <TransactionTable transaction={transaction} />
-                        </ScrollArea>
+                        {transaction.length > 0 && (
+                            <ScrollArea className="h-full w-full px-2 sm:px-4">
+                                <TransactionTable transaction={transaction} />
+                            </ScrollArea>
+                        )}
+                        {transaction.length <= 0 && (
+                            <div
+                                className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm h-full border-muted-foreground px-5"
+                            >
+                                <div className="flex flex-col items-center gap-1 text-center">
+                                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
+                                        You have no Expense statements
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        You can start creating your expense statements.
+                                    </p>
+                                    <Button className="mt-4" onClick={() => setFormOpenModal(true)}>Add Expense</Button>
+                                </div>
+                            </div>
+                        )}
                     </div>
+
+                    <TransactionCreateForm open={formOpenModal} setOpen={setFormOpenModal} />
                 </>
             }
         </>

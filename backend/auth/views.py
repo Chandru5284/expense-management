@@ -10,6 +10,10 @@ from django.utils import timezone
 from datetime import timedelta
 import jwt
 import hashlib
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 
 # import models
 from user.models import Profile
@@ -153,6 +157,27 @@ class ForgotPasswordView(APIView):
             data = { 
                 'token' : profile.email_verification_code
             }
+            
+            subject = "TEST"
+            message = "your otp is 5559"
+            
+            email_verification_link = settings.FRONTEND_URL+'/auth/reset-password/?token='+str(data['token'])
+            
+            html_message = render_to_string("email.html", {"email_verification_link": email_verification_link})
+            plain_message = strip_tags(html_message)
+            
+            
+            message = EmailMultiAlternatives(
+                subject = subject,
+                body = plain_message,
+                from_email = None,
+                to = [user.email]
+            )
+            
+            message.attach_alternative(html_message, "text/html")
+            message.send()
+            
+            # send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
             
             
             # Utils.send_reset_password_mail(request, user.email, data)

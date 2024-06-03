@@ -41,6 +41,7 @@ const TransactionCreateForm = ({ open, setOpen }: any) => {
 
     const onHandleChange = (name: string, value: string | number | boolean) => {
         setRecord({ "transaction_type": transaction_type, ...record, [name]: value })
+        recordError ? setRecordError({}) : null
     }
 
     const createTransactionMutation: any = useMutation({

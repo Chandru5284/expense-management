@@ -90,24 +90,24 @@ export function RecentSales() {
         <div className="">
 
             {firstThreeRecords?.length > 0 && (
-                <div className='divide-y divide-gray-200'>
+                <div className='divide-y '>
                     {firstThreeRecords && firstThreeRecords.map((row: any, index: any) => {
                         const IconComponent: any = transactionDefaultIcons[row.category.icon]; // Get the corresponding icon component from incomeIcons
                         return (
                             <div key={index} className="">
-                                <a href="#" className="block hover:bg-gray-50 space-y-1">
+                                <a className="block space-y-1">
                                     <div className="py-4 flex w-full items-center gap-x-5">
                                         <div className=''>
                                             <IconComponent className='text-4xl text-green-500' />
                                         </div>
                                         <div className='w-full'>
                                             <div className="flex items-center justify-between">
-                                                <p className="text-sm font-medium text-indigo-600 truncate">{row.title}</p>
+                                                <p className="text-sm font-medium  truncate">{row.title}</p>
                                                 <div className="ml-2 flex-shrink-0 flex">
                                                     {row.transaction_type == "INCOME" ?
-                                                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800`}>Income</p>
+                                                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-600 dark:text-white`}>Income</p>
                                                         :
-                                                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800`}>Expense</p>
+                                                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-600 dark:text-white`}>Expense</p>
                                                     }
                                                 </div>
                                             </div>

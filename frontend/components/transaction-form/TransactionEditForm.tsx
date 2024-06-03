@@ -50,7 +50,7 @@ const TransactionEditForm = ({ open, setOpen, record, setRecord }: any) => {
 
     const onHandleChange = (name: string, value: string | number | boolean) => {
         setRecord({ ...record, [name]: value })
-        console.log("WORKING")
+        recordError ? setRecordError({}) : null
     }
 
 

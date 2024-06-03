@@ -22,6 +22,7 @@ const MemberForm = () => {
 
     const onHandleChange = (name: any, value: any) => {
         setRecord({ ...record, [name]: value })
+        // recordError ? setRecordError({}) : null
     }
 
     const fetchMemberRecord = () => {

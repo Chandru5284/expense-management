@@ -13,12 +13,12 @@ const login = async (record: any | null) => {
 
 // forgot password
 const forgotPasswordEmail = async (record: any | null) => {
-    return await axios.post('/api/v1/auth/forgotPassword/', record).then(handleResponse).catch(handleError)
+    return await axios.post('/api/v1/auth/forgot-password/', record).then(handleResponse).catch(handleError)
 }
 
 // reset password
 const resetPassword = async (record: any | null) => {
-    return await axios.post('/api/v1/auth/resetPassword/', record).then(handleResponse).catch(handleError)
+    return await axios.post('/api/v1/auth/reset-password/', record).then(handleResponse).catch(handleError)
 }
 
 // profile view

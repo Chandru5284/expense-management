@@ -32,7 +32,7 @@ const ExcelDownload = ({ transaction_type = "" }: any) => {
         <>
             <div className="md:flex items-center space-x-2 hidden">
                 <CalendarDateRangePicker date={date} setDate={setDate} months={2} />
-                <Button className='hover:bg-[#795da5d3] hover:text-neutral-100  bg-[#735DA5] text-neutral-100 font-bold'>
+                <Button className='font-bold'>
 
                     {start_date != null && end_date != null ?
                         (
